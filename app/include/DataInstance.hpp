@@ -19,7 +19,7 @@ public:
     //T** get(char* field, float value);
     //T** get(char* field, char* value);
     T* persist(T* object);
-    void delete(int id);
+    void remove(int id);
 
 };
 
