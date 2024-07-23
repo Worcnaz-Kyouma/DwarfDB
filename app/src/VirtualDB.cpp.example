@@ -1,0 +1,100 @@
+#include "VirtualDB.hpp"
+
+Entity* VirtualDB::fetch(int id){
+    const Entity* searchObject = this->executeBinarySearch(id, this->objectHeap, this->numberOfRegisters);
+    return searchObject;
+}
+
+Entity* VirtualDB::insert(Entity* object){
+    const Entity** newObjectHeapSpace = new Entity*[this->numberOfRegisters + 1];
+    const Entity** newObjectHeap = this->copyArray(newObjectHeapSpace, this->numberOfRegisters, this->objectHeap);
+
+    this->numberOfRegisters++;
+
+    newObjectHeap[this->numberOfRegisters] = object;
+
+    return object;
+}
+
+void VirtualDB::remove(int id){
+    if(this->numberOfRegisters == 0) {
+        return;
+    }
+
+    this->executeBinarySearch(id, this->objectHeap, this->numberOfRegisters, true);
+
+    this->numberOfRegisters--;
+
+    const Entity** newObjectHeap = new Entity*[this->numberOfRegisters];
+
+    int i = 0;
+    for(int c = 0; c<this->numberOfRegisters; c++){
+        if(this->objectHeap[c] == nullptr) {
+            continue;
+        }
+
+        newObjectHeap[i] = this->objectHeap[c];
+    }
+
+    this->objectHeap = newObjectHeap;
+}
+
+int VirtualDB::getDataCount() {
+    return this->numberOfRegisters;
+}
+
+Entity* VirtualDB::executeBinarySearch(int id, Entity** source, int sourceSize, bool deleteEntry = false) {
+    if(sourceSize == 1) {
+        if(deleteEntry) {
+            delete source[0];
+            source[0] = nullptr;
+        }
+
+        return source[0];
+    }
+    
+    const int middleIndex = sourceSize / 2;
+    const Entity* middleObject = source[middleIndex];
+
+    const bool isOnTheMiddle = middleObject->id == id;
+    if(isOnTheMiddle) {
+        if(deleteEntry) {
+            delete middleObject;
+            middleObject = nullptr;
+        }
+
+        return middleObject;
+    }
+
+    const bool isInFirstHalf = middleId > id;
+
+    if(isInFirstHalf) {
+        const int newSize = middleIndex;
+
+        const Entity** firstHalfSpace = new Entity*[newSize];
+
+        const Entity** firstHalf = this->copyArray(firstHalfSpace, newSize, source);
+
+        return this->executeBinarySearch(id, firstHalf, newSize);
+    } else {
+        const int newSize = middleIndex - sourceSize % 2 == 0 ? 1 : 0;
+
+        const Entity** secondHalfSpace = new Entity*[newSize];
+
+        const Entity** secondHalf = this->copyArray(secondHalfSpace, newSize, source, middleIndex + 1);
+
+        return this->executeBinarySearch(id, secondHalf, newSize);
+    }
+}
+
+void** VirtualDB::copyArray(void** destination, int numberOfCopies, void** source, int beginIndexSource = 0) {
+    if(numberOfCopies == 0) {
+        return destination;
+    }
+
+    for(int c = beginIndexSource; c<numberOfCopies; c++) {
+        destination[c] = source[c];
+    }
+
+    return destination;
+}
