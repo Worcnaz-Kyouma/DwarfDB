@@ -12,7 +12,10 @@ DwarfDB is diveded into two types of DB:
 ## To Do
 #### Classes
 - [ ] Entity
-- [ ] Database
+- [ ] Utils
+  - [ ] executeBinarySearch()
+  - [ ] copyArray()
+- [x] Database
   - [ ] VirtualDB
   - [ ] FileDB
 #### General
