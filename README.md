@@ -10,4 +10,13 @@ DwarfDB is diveded into two types of DB:
 ## How to use
 
 ## To Do
-- [x] Virtual DB
+#### Classes
+- [ ] Entity
+- [ ] Database
+  - [ ] VirtualDB
+  - [ ] FileDB
+#### General
+- [ ] Makefile
+- [ ] Improve README.md(fill "Implementation" and "How to use" fields)
+- [ ] Tests
+  - [ ] Object binary in Lib dir of compiler
