@@ -1,7 +1,7 @@
 #ifndef DWARFDB_VIRTUALDB_H
 #define DWARFDB_VIRTUALDB_H
 
-#include "Entity.cpp"
+#include "Entity.hpp"
 #include "Database.hpp"
 
 class VirtualDB : public Database {

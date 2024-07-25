@@ -4,14 +4,17 @@
 #include "Database.hpp"
 
 class Entity {
+friend class Database;
+
 private:
     int id;
     static const Database* database;
+    void setID(int id); //Just database relatives can make it... Through friend relation!
 
 public:
     Entity();
+
     int getID();
-    void setID(int id); //Just database relatives can make it
 
     Entity* getByID(int id);
     Entity* create(Entity* object);
