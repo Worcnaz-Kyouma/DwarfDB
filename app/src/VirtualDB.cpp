@@ -5,5 +5,5 @@ Entity* VirtualDB::insert(Entity* object) {
         return object; //Dont know how to make the errors
     }
 
-    
+    object->id = VirtualDB::generateNextID();
 }

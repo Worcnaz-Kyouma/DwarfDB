@@ -2,14 +2,15 @@
 #define DWARFDB_ENTITY_H
 
 #include "Database.hpp"
+#include "VirtualDB.hpp"
 
 class Entity {
 friend class Database;
+friend class VirtualDB;
 
 private:
     int id;
-    static const Database* database;
-    void setID(int id); //Just database relatives can make it... Through friend relation!
+    static Database* database;
 
 public:
     Entity();
